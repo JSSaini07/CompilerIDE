@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Compiler</title>
+  <link type='text/css' rel='stylesheet' href='bootstrap-3.3.6-dist\css\bootstrap.min.css'></link>
+  <link type='text/css' rel='stylesheet' href='css\index.css'></link>
+</head>
+<body>
+<center>
+  <nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">Compiler</a>
+        <div class='themeChange pull-right'></div>
+        <div class='run pull-right'></div>
+        <div class='languageSelected pull-right'><kbd>C++</kbd></div>
+    </div>
+  </nav>
+  <textarea id='editor'></textarea>
+  <hr>
+  <div class='language_select_menu'>
+    <ul>
+      <li class='language'>C</li>
+      <li class='language' id='selected'>C++</li>
+      <li class='language'>Clojure</li>
+      <li class='language'>C#</li>
+      <li class='language'>Java</li>
+      <li class='language'>Javascript</li>
+      <li class='language'>Haskell</li>
+      <li class='language'>Perl</li>
+      <li class='language'>PHP</li>
+      <li class='language'>Python</li>
+      <li class='language'>Ruby</li>
+    </ul>
+  </div>
+  <div class='loading'></div>
+</center>
+<div class='status'><span class='bg-success'>Status</span>:
+  <span class='code_status'><code> No Submissions Yet! </code></span>
+</div>
+<div class='result'></div>
+<script src='ace/src-min/ace.js'></script>
+<script src='javascript/jquery-2.2.3.min.js'></script>
+<script src='bootstrap-3.3.6-dist\js\bootstrap.min.js'></script>
+<script src='javascript/index.js'></script>
+</body>
+</html>
