@@ -1,14 +1,16 @@
 {
-  "name": compiler",
+  "name": "compiler",
   "version": "1.0.0",
- "main": "server.js",
+  "description": "",
+  "main": "server.js",
   "dependencies": {
- "express": "^4.13.4"
-  }, "devDependencies": {},
+    "express": "^4.13.4"
+  },
+  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"
   },
-  "author": "jasmeet singh",
+  "author": "Jasmeet Singh",
   "license": "ISC"
 }

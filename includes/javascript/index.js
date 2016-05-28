@@ -4,6 +4,8 @@ editor.setTheme("ace/theme/monokai");
 editor.getSession().setMode("ace/mode/c_cpp");
 editor.$blockScrolling = Infinity;
 
+clickState=-1;
+
 language_map={
   'C':'C',
   'C++':'CPP11',
@@ -66,16 +68,30 @@ $(document).ready(function(){
       editor.getSession().setMode("ace/mode/"+mode_map[languageSelected]);
       editor.setValue(starter_code_map[languageSelected]);
   });
+  $('.custom_input').click(function(e){
+    if(clickState==-1) {
+      width=$('.input').width();
+      x=e.pageX-width;
+      y=e.pageY+20;
+      $('.input').css({display:'initial',left:x,top:y});
+    }
+    else {
+        $('.input').css({display:'none'});
+    }
+    clickState*=-1;
+  });
   $('.run').click(function(){
     $('.loading').css({'display':'initial'});
     $('.ace_editor').animate({marginTop:'0px'});
     code=editor.getValue();
+    input=$('.input').val();
     $.ajax({
       url:'run',
       method:'GET',
       data:{
         'lang':language_map[languageSelected],
-        'code':code
+        'code':code,
+        'input':input
         },
       success:function(result){addResult(result);}
     })

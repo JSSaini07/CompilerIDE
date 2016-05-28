@@ -10,12 +10,14 @@ CLIENT_SECRET = 'bea98ae9dcbc79df09271f0ffc5bfe7e13c2a2c6'
 app.get('/run',function(req,res){
   language=req.query.lang;
   code=req.query.code;
+  input=req.query.input;
   request({
     url: RUN_URL,
     method: "POST",
     form:{
       'client_secret': CLIENT_SECRET,
       'async': 0,
+      'input':input,
       'source': code,
       'lang': language,
       'time_limit': 5,
