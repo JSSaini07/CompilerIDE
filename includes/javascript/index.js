@@ -172,6 +172,6 @@ function addResult(result) {
   }
   $('.loading').css({'display':'none'});
   $('.result').html(result);
-  $('.code_url').html('<kbd><span class="code_label"> Code Url </span>:<span class="code_link"> http://192.168.0.103:3030/?code_id='+code_id+'</span></kbd>');
+  $('.code_url').html('<kbd><span class="code_label"> Code Url </span>:<span class="code_link"> http://compileride.herokuapp.com?code_id='+code_id+'</span></kbd>');
   $('.code_url').css({'display':'initial'});
 }
