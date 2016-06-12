@@ -68,6 +68,23 @@ mode_map={
 
 code_id=window.location.search.split('=')[1];
 
+function run(){
+  $('.loading').css({'display':'initial'});
+  $('.ace_editor').animate({marginTop:'0px'});
+  code=editor.getValue();
+  input=$('.input').val();
+  $.ajax({
+    url:'run',
+    method:'GET',
+    data:{
+      'lang':language_map[languageSelected],
+      'code':code,
+      'input':input
+      },
+    success:function(result){addResult(result);}
+  });
+}
+
 $.ajax({
   url:'/getCode?code_id='+code_id,
   method:'GET',
@@ -83,6 +100,7 @@ $.ajax({
       $('.languageSelected').html('<kbd>'+languageSelected+'</kbd>');
       $('.'+language_map[languageSelected]).attr('id','selected');
       editor.getSession().setMode("ace/mode/"+mode_map[languageSelected]);
+      run();
     }
     else {
       editor.setValue(starter_code_map['C++']);
@@ -119,22 +137,7 @@ $(document).ready(function(){
     }
     clickState*=-1;
   });
-  $('.run').click(function(){
-    $('.loading').css({'display':'initial'});
-    $('.ace_editor').animate({marginTop:'0px'});
-    code=editor.getValue();
-    input=$('.input').val();
-    $.ajax({
-      url:'run',
-      method:'GET',
-      data:{
-        'lang':language_map[languageSelected],
-        'code':code,
-        'input':input
-        },
-      success:function(result){addResult(result);}
-    })
-  });
+  $('.run').click(function(){run()});
   $('.themeChange').click(function(){
     if(editor.getTheme().indexOf('github')>0)
     {
