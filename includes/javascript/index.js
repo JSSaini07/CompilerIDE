@@ -17,7 +17,16 @@ language_map={
   'Perl':'PERL',
   'PHP':'PHP',
   'Python':'PYTHON',
-  'Ruby':'RUBY'
+  'Ruby':'RUBY',
+  'CPP11':'C++',
+  'CLOJURE':'Clojure',
+  'CSHARP':'C#',
+  'JAVA':'Java',
+  'JAVASCRIPT':'Javascript',
+  'HASKELL':'Haskell',
+  'PERL':'Perl',
+  'PYTHON':'Python',
+  'RUBY':'Ruby'
 }
 
 starter_code_map={
@@ -37,20 +46,50 @@ starter_code_map={
 mode_map={
   'C':'c_cpp',
   'C++':'c_cpp',
+  'CPP11':'c_cpp',
   'Clojure':'clojure',
+  'CLOJURE':'clojure',
   'C#':'csharp',
+  'CSHARP':'csharp',
   'Java':'java',
+  'JAVA':'java',
   'Javascript':'javascript',
+  'JAVASCRIPT':'javascript',
   'Haskell':'haskell',
+  'HASKELL':'haskell',
   'Perl':'perl',
+  'PERL':'perl',
   'PHP':'php',
   'Python':'python',
-  'Ruby':'ruby'
+  'PYTHON':'python',
+  'Ruby':'ruby',
+  'RUBY':'ruby'
 }
 
-editor.setValue(starter_code_map['C++']);
+code_id=window.location.search.split('=')[1];
 
-languageSelected='C++';
+$.ajax({
+  url:'/getCode?code_id='+code_id,
+  method:'GET',
+  success:function(result){
+    if(result.length!=0)
+    {
+      splitIndex=result.indexOf('/');
+      languageSelected=result.substr(0,splitIndex);
+      languageSelected=language_map[languageSelected];
+      code=result.substr(splitIndex+1,result.length);
+      editor.setValue(code);
+      $('#selected').attr('id','');
+      $('.languageSelected').html('<kbd>'+languageSelected+'</kbd>');
+      $('.'+language_map[languageSelected]).attr('id','selected');
+      editor.getSession().setMode("ace/mode/"+mode_map[languageSelected]);
+    }
+    else {
+      editor.setValue(starter_code_map['C++']);
+      languageSelected='C++';
+    }
+  }
+});
 
 $(document).ready(function(){
   $('.languageSelected').click(function(){
@@ -110,6 +149,7 @@ $(document).ready(function(){
 });
 function addResult(result) {
   result=JSON.parse(result);
+  code_id=result.code_id;
   status=result.run_status.status;
   if(status=='AC') {
     $('.code_status').html("<code> AC </code>");
@@ -132,4 +172,6 @@ function addResult(result) {
   }
   $('.loading').css({'display':'none'});
   $('.result').html(result);
+  $('.code_url').html('<kbd><span class="code_label"> Code Url </span>:<span class="code_link"> http://192.168.0.103:3030/?code_id='+code_id+'</span></kbd>');
+  $('.code_url').css({'display':'initial'});
 }

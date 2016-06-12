@@ -126,6 +126,16 @@ ul {
   color:yellow;
 }
 
+.code_url {
+  display:none;
+  float:right;
+  margin-right:2%;
+}
+
+.code_url:hover {
+  cursor:pointer;
+}
+
 .themeChange:hover,.run:hover,.languageSelected:hover {
   cursor:pointer;
 }

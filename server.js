@@ -1,6 +1,18 @@
 var express = require('express');
 var request = require('request');
+var mongoose = require('mongoose');
 var app = express();
+
+mongoose.connect('mongodb://JSSaini07:compilerideJSSaini07@ds013584.mlab.com:13584/compileride',function(err){
+  if(err)
+  {
+    console.log(err);
+  } else {
+    console.log("Connected to the database");
+  }
+});
+
+var codes=mongoose.model('codes',{code_id:String,lang:String,code:String});
 
 app.use(express.static(__dirname+'/includes'));
 
@@ -24,7 +36,24 @@ app.get('/run',function(req,res){
       'memory_limit': 262144,
     }
   },function(error,response,body) {
+    code_id=JSON.parse(body).code_id;
+    var r=new codes({code_id:code_id,lang:language,code:code});
+    r.save();
     res.end(body);
+  });
+});
+
+app.get('/getCode',function(req,res){
+  search_code_id=req.query.code_id;
+  codes.find({code_id:search_code_id},function(err,data){
+    if(data.length==0)
+    {
+      res.end("");
+    }
+    else {
+      result=data[0].lang+"/"+data[0].code;
+      res.end(result);
+    }
   });
 });
 
