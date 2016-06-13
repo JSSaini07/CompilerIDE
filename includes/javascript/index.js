@@ -68,46 +68,32 @@ mode_map={
 
 code_id=window.location.search.split('=')[1];
 
-function run(){
-  $('.loading').css({'display':'initial'});
-  $('.ace_editor').animate({marginTop:'0px'});
-  code=editor.getValue();
-  input=$('.input').val();
+editor.setValue(starter_code_map['C++']);
+languageSelected='C++';
+
+if(window.location.search!="")
+{
   $.ajax({
-    url:'run',
+    url:'/getCode?code_id='+code_id,
     method:'GET',
-    data:{
-      'lang':language_map[languageSelected],
-      'code':code,
-      'input':input
-      },
-    success:function(result){addResult(result);}
+    success:function(result){
+      if(JSON.stringify(result).length!=2)
+      {
+        result=JSON.parse(result);
+        languageSelected=result.lang;
+        languageSelected=language_map[languageSelected];
+        code=result.code;
+        editor.setValue(code);
+        $('#selected').attr('id','');
+        $('.languageSelected').html('<kbd>'+languageSelected+'</kbd>');
+        $('.'+language_map[languageSelected]).attr('id','selected');
+        editor.getSession().setMode("ace/mode/"+mode_map[languageSelected]);
+        $('.input')[0].value=result.parameters;
+        placeResult(result.output);
+      }
+    }
   });
 }
-
-$.ajax({
-  url:'/getCode?code_id='+code_id,
-  method:'GET',
-  success:function(result){
-    if(result.length!=0)
-    {
-      splitIndex=result.indexOf('/');
-      languageSelected=result.substr(0,splitIndex);
-      languageSelected=language_map[languageSelected];
-      code=result.substr(splitIndex+1,result.length);
-      editor.setValue(code);
-      $('#selected').attr('id','');
-      $('.languageSelected').html('<kbd>'+languageSelected+'</kbd>');
-      $('.'+language_map[languageSelected]).attr('id','selected');
-      editor.getSession().setMode("ace/mode/"+mode_map[languageSelected]);
-      run();
-    }
-    else {
-      editor.setValue(starter_code_map['C++']);
-      languageSelected='C++';
-    }
-  }
-});
 
 $(document).ready(function(){
   $('.languageSelected').click(function(){
@@ -137,7 +123,22 @@ $(document).ready(function(){
     }
     clickState*=-1;
   });
-  $('.run').click(function(){run()});
+  $('.run').click(function(){
+    $('.loading').css({'display':'initial'});
+    $('.ace_editor').animate({marginTop:'0px'});
+    code=editor.getValue();
+    input=$('.input').val();
+    $.ajax({
+      url:'run',
+      method:'GET',
+      data:{
+        'lang':language_map[languageSelected],
+        'code':code,
+        'input':input
+        },
+      success:function(result){addResult(result);}
+    });
+  });
   $('.themeChange').click(function(){
     if(editor.getTheme().indexOf('github')>0)
     {
@@ -175,6 +176,31 @@ function addResult(result) {
   }
   $('.loading').css({'display':'none'});
   $('.result').html(result);
-  $('.code_url').html('<kbd><span class="code_label"> Code Url </span>:<span class="code_link"> http://compileride.herokuapp.com?code_id='+code_id+'</span></kbd>');
+  $('.code_url').html('<kbd><span class="code_label"> Code Url </span>:<span class="code_link">http://compileride.herokuapp.com?code_id='+code_id+'</span></kbd>');
   $('.code_url').css({'display':'initial'});
+  $('.code_url').on('click',function(){window.location=$('.code_link')[0].innerHTML});
+}
+
+function placeResult(result) {
+  status=result.run_status.status;
+  if(status=='AC') {
+    $('.code_status').html("<code> AC </code>");
+    result=result.run_status.output_html;
+  }
+  else
+  if(status=='CE') {
+    $('.code_status').html("<code> CE </code>");
+    result=result.compile_status;
+  }
+  else {
+  if(status=='TLE') {
+    $('.code_status').html("<code> TLE </code>");
+    result="";
+  }
+  else {
+    $('.code_status').html("<code> SIGSEGV </code>");
+    result="";
+  }
+  }
+  $('.result').html(result);
 }

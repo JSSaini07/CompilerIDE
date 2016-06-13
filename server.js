@@ -12,7 +12,7 @@ mongoose.connect('mongodb://JSSaini07:compilerideJSSaini07@ds013584.mlab.com:135
   }
 });
 
-var codes=mongoose.model('codes',{code_id:String,lang:String,code:String});
+var codes=mongoose.model('codes',{code_id:String,lang:String,code:String,parameters:String,output:JSON});
 
 app.use(express.static(__dirname+'/includes'));
 
@@ -37,7 +37,8 @@ app.get('/run',function(req,res){
     }
   },function(error,response,body) {
     code_id=JSON.parse(body).code_id;
-    var r=new codes({code_id:code_id,lang:language,code:code});
+    output=JSON.parse(body);
+    var r=new codes({code_id:code_id,lang:language,code:code,parameters:input,output:output});
     r.save();
     res.end(body);
   });
@@ -51,8 +52,8 @@ app.get('/getCode',function(req,res){
       res.end("");
     }
     else {
-      result=data[0].lang+"/"+data[0].code;
-      res.end(result);
+      result=data[0];
+      res.end(JSON.stringify(result));
     }
   });
 });
