@@ -176,9 +176,17 @@ function addResult(result) {
   }
   $('.loading').css({'display':'none'});
   $('.result').html(result);
-  $('.code_url').html('<kbd><span class="code_label"> Code Url </span>:<span class="code_link">http://compileride.herokuapp.com?code_id='+code_id+'</span></kbd>');
+  $('.code_url').html('<kbd><span class="code_label"> Code Url </span>:<span class="code_link">http://192.168.0.102?code_id='+code_id+'</span></kbd>');
   $('.code_url').css({'display':'initial'});
-  $('.code_url').on('click',function(){window.location=$('.code_link')[0].innerHTML});
+  $('.code_url').on('mousedown',function(){
+    $('.hiddenArea')[0].value=$('.code_link')[0].innerHTML;
+    $('.hiddenArea').select();
+    document.execCommand('copy');
+    this.innerHTML='<kbd>Link Copied<kbd>';
+    $('body').on('mouseup',function(){
+      $('.code_url').html('<kbd><span class="code_label"> Code Url </span>:<span class="code_link">http://192.168.0.102?code_id='+code_id+'</span></kbd>');
+    });
+  });
 }
 
 function placeResult(result) {

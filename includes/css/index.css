@@ -136,6 +136,10 @@ ul {
   cursor:pointer;
 }
 
+.hiddenArea {
+  opacity:0;
+}
+
 .themeChange:hover,.run:hover,.languageSelected:hover {
   cursor:pointer;
 }
