@@ -11,7 +11,6 @@ var logout=require('./server/routes/logout.js');
 var userProfile=require('./server/routes/userProfile.js');
 var app = express();
 
-
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(session({secret:'ssshhhhh'}));
 app.use(morgan('dev'));
