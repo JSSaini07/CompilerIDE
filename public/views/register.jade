@@ -1,0 +1,43 @@
+doctype html
+html(lang='en')
+  head
+    meta(charset='UTF-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1.0')
+    title Compiler
+    link(type='text/css', rel='stylesheet', href='../bootstrap-3.3.6-dist/css/bootstrap.min.css')
+    link(type='text/css', rel='stylesheet', href='../css/register.css')
+  body
+  center
+    .registerHeader Register
+    .registerForm
+      .row.field
+        .col-xs-6.formLabel.fnameLabel First Name
+        .col-xs-6.formInput.fnameInput 
+            input(type='text')
+      .row.field
+        .col-xs-6.formLabel.lnameLabel Last Name
+        .col-xs-6.formInput.lnameInput 
+            input(type='text')
+      .row.field
+        .col-xs-6.formLabel.userNameLabel Username
+        .col-xs-6.formInput.userNameInput 
+            input(type='text')
+      .row.field
+        .col-xs-6.formLabel.emailLabel Email ID
+        .col-xs-6.formInput.emailInput 
+            input(type='text')
+      .row.field
+        .col-xs-6.formLabel.passwordLabel Password
+        .col-xs-6.formInput.passwordInput 
+            input(type='password')
+      .row.field
+        .col-xs-6.formLabel.cpasswordLabel Confirm Password
+        .col-xs-6.formInput.cpasswordInput 
+            input(type='password')
+      .row.errorMessage
+        .col-xs-12
+      .row.field
+        .registerButton.btn.btn-success Register
+  script(src='../javascript/jquery-2.2.3.min.js')
+  script(src='../javascript/register.js')
+

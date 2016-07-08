@@ -1,0 +1,40 @@
+doctype html
+html(lang='en')
+  head
+    meta(charset='UTF-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1.0')
+    title Compiler
+    link(type='text/css', rel='stylesheet', href='../bootstrap-3.3.6-dist/css/bootstrap.min.css')
+    link(type='text/css', rel='stylesheet', href='../css/user.css')
+  body
+  center
+  each d in data
+    nav.navbar.navbar-default
+      .container-fluid
+        .navbar-header
+          a.navbar-brand
+            span.fname!=d.fname
+            span.lname!=d.lname
+            span.username!=d.username
+        .codeCount.pull-right Total Codes 
+          span!=d.codes.length
+    each c in d.codes
+      .panel-group
+        .panel.panel-primary
+          .panel-heading
+            span.label.langLabel Language
+            code
+              span.keyword.lang!=c.lang
+            span.label.statusLabel Status
+            code
+              span.keyword.status!=c.output.run_status.status 
+            span.label.dateLabel Submitted On
+            code
+              span.keyword.date!=c.date 
+          .panel-body 
+            mark
+              span.link http://compileride.herokuapp.com/code/
+                span.code_id!=c.code_id
+  script(src='../javascript/jquery-2.2.3.min.js')
+  script(src='../javascript/user.js')
+

@@ -1,66 +1,36 @@
 var express = require('express');
-var request = require('request');
-var mongoose = require('mongoose');
+var session=require('express-session');
+var bodyParser=require('body-parser');
+var morgan=require('morgan');
+var index=require('./server/routes/index.js');
+var run=require('./server/routes/run.js');
+var savedCodeView=require('./server/routes/savedCodeView.js');
+var register=require('./server/routes/register.js');
+var login=require('./server/routes/login.js');
+var logout=require('./server/routes/logout.js');
+var userProfile=require('./server/routes/userProfile.js');
 var app = express();
 
-mongoose.connect('mongodb://JSSaini07:compilerideJSSaini07@ds013584.mlab.com:13584/compileride',function(err){
-  if(err)
-  {
-    console.log(err);
-  } else {
-    console.log("Connected to the database");
-  }
-});
 
-var codes=mongoose.model('codes',{code_id:String,lang:String,code:String,parameters:String,output:JSON});
-
-app.use(express.static(__dirname+'/includes'));
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(session({secret:'ssshhhhh'}));
+app.use(morgan('dev'));
+app.set('view engine','jade');
+app.set('views','public/views');
+app.use(express.static(__dirname+'/public'));
 
 RUN_URL = 'http://api.hackerearth.com/code/run/'
-CLIENT_SECRET = 'bea98ae9dcbc79df09271f0ffc5bfe7e13c2a2c6'
+CLIENT_SECRET = process.env.CLIENT_SECRET
 
-app.get('/run',function(req,res){
-  language=req.query.lang;
-  code=req.query.code;
-  input=req.query.input;
-  request({
-    url: RUN_URL,
-    method: "POST",
-    form:{
-      'client_secret': CLIENT_SECRET,
-      'async': 0,
-      'input':input,
-      'source': code,
-      'lang': language,
-      'time_limit': 5,
-      'memory_limit': 262144,
-    }
-  },function(error,response,body) {
-    code_id=JSON.parse(body).code_id;
-    output=JSON.parse(body);
-    var r=new codes({code_id:code_id,lang:language,code:code,parameters:input,output:output});
-    r.save();
-    res.end(body);
-  });
-});
-
-app.get('/getCode',function(req,res){
-  search_code_id=req.query.code_id;
-  codes.find({code_id:search_code_id},function(err,data){
-    if(data.length==0)
-    {
-      res.end("");
-    }
-    else {
-      result=data[0];
-      res.end(JSON.stringify(result));
-    }
-  });
-});
-
-app.get('/',function(req,res){
-  res.sendFile('/index.html');
-});
+app.get('/',index);
+app.get('/run',run);
+app.get('/code/:code_id',savedCodeView);
+app.get('/register',register);
+app.post('/register',register);
+app.get('/login',login);
+app.post('/login',login);
+app.get('/logout',logout);
+app.get('/user/:username',userProfile);
 
 var port=process.env.PORT||3030;
 
