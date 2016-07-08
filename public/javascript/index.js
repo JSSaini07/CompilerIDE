@@ -128,6 +128,7 @@ $(document).ready(function() {
         clickState *= -1;
     });
     $('.run').click(function() {
+        languageSelected=$('#selected').text();
         $('.loading').css({
             'display': 'initial'
         });
