@@ -9,7 +9,7 @@ var register=require('./server/routes/register.js');
 var login=require('./server/routes/login.js');
 var logout=require('./server/routes/logout.js');
 var userProfile=require('./server/routes/userProfile.js');
-var app = express();
+var app=express();
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(session({secret:'ssshhhhh'}));
