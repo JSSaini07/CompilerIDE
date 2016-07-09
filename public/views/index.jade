@@ -8,48 +8,48 @@ html(lang='en')
     link(type='text/css', rel='stylesheet', href='../css/index.css')
   body
     center
-    each d in data
-      nav.navbar.navbar-default
-        .container-fluid
-          .themeChange.pull-left
-          .run.pull-left
-          .languageSelected.pull-left
-            kbd C++
-          .custom_input.pull-left
-          if(d.username==undefined)
-            .optionTab.register.pull-right Register
-            .optionTab.login.pull-right Login
-          else
-            .optionTab.logout.pull-right Logout
-            .optionTab.username.pull-right!=d.username
-      input(type='text' id='savedCodeResult' class='hidden' value=d.response)
-      textarea#editor
-      hr
-      .language_select_menu
-        ul
-          li.language.C C
-          li#selected.language.CPP11 C++
-          li.language.CLOJURE Clojure
-          li.language.CSHARP C#
-          li.language.JAVA Java
-          li.language.JAVASCRIPT Javascript
-          li.language.HASKELL Haskell
-          li.language.PERL Perl
-          li.language.PHP PHP
-          li.language.PYTHON Python
-          li.language.RUBY Ruby
-      .loading
-    .status
-      span.bg-success Status
-      | :
-      span.code_status
-        code  No Submissions Yet! 
-    .code_url
-    textarea.hiddenArea(readonly='')
-    .result
+      each d in data
+        nav.navbar.navbar-default
+          .container-fluid
+            .themeChange.pull-left
+            .run.pull-left
+            .languageSelected.pull-left
+              kbd C++
+            .download_code.pull-left
+            .custom_input.pull-left
+            if(d.username==undefined)
+              .optionTab.register.pull-right Register
+              .optionTab.login.pull-right Login
+            else
+              .optionTab.logout.pull-right Logout
+              .optionTab.username.pull-right!=d.username
+        input(type='text' id='savedCodeResult' class='hidden' value=d.response)
+        textarea#editor
+        hr
+        .language_select_menu
+          ul
+            li.language.C C
+            li#selected.language.CPP11 C++
+            li.language.CLOJURE Clojure
+            li.language.CSHARP C#
+            li.language.JAVA Java
+            li.language.JAVASCRIPT Javascript
+            li.language.HASKELL Haskell
+            li.language.PERL Perl
+            li.language.PHP PHP
+            li.language.PYTHON Python
+            li.language.RUBY Ruby
+        .loading
+      .status
+        span.bg-success Status
+        | :
+        span.code_status
+          code  No Submissions Yet! 
+      .code_url
+      textarea.hiddenArea(readonly='')
+      .result
     textarea.input(placeholder='Provide Custom Input')
     script(src='../ace/src-min/ace.js')
     script(src='../javascript/jquery-2.2.3.min.js')
     script(src='../bootstrap-3.3.6-dist\js\bootstrap.min.js')
     script(src='../javascript/index.js')
-
