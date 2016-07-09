@@ -6,6 +6,7 @@ editor.$blockScrolling = Infinity;
 editor.focus();
 
 clickState = -1;
+code_id="";
 
 language_map = {
     'C': 'C',
@@ -28,6 +29,20 @@ language_map = {
     'PERL': 'Perl',
     'PYTHON': 'Python',
     'RUBY': 'Ruby'
+}
+
+language_extension = {
+    'C': 'c',
+    'C++': 'cpp',
+    'Clojure': 'clj',
+    'C#': 'cs',
+    'Java': 'java',
+    'Javascript': 'js',
+    'Haskell': 'hs',
+    'Perl': 'pl',
+    'PHP': 'php',
+    'Python': 'py',
+    'Ruby': 'rb'
 }
 
 starter_code_map = {
@@ -127,6 +142,19 @@ $(document).ready(function() {
         }
         clickState *= -1;
     });
+    $('.download_code').on('click',function(){
+        code_content=editor.getValue();
+        extension=language_extension[$('#selected').text()];
+        if(code_id=="")
+        {
+            code_id=parseInt(Math.random()*10000000);
+        }
+        var url = window.URL.createObjectURL(new Blob([code_content], {type: 'text'}));
+        temp=document.createElement('a');
+        temp.href=url;
+        temp.download=code_id+'.'+extension;
+        temp.click();
+    })
     $('.run').click(function() {
         languageSelected=$('#selected').text();
         $('.loading').css({
