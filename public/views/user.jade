@@ -30,11 +30,10 @@ html(lang='en')
               span.keyword.status!=c.output.run_status.status 
             span.label.dateLabel Submitted On
             code
-              span.keyword.date!=c.date 
+              span.keyword.date!=c.date_difference
           .panel-body 
             mark
               span.link http://compileride.herokuapp.com/code/
                 span.code_id!=c.code_id
   script(src='../javascript/jquery-2.2.3.min.js')
   script(src='../javascript/user.js')
-

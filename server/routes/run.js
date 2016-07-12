@@ -24,10 +24,6 @@ router.get('/run',function(req,res){
     code_id=JSON.parse(body).code_id;
     output=JSON.parse(body);
     date=new Date();
-    day=date.getUTCDate()
-    month=date.getUTCMonth()
-    year=date.getUTCFullYear()
-    date=day+'/'+month+'/'+year;
     username="";
     if(req.session.username!=undefined)
     {
