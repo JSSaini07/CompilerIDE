@@ -1,7 +1,7 @@
 
 var mongoose=require('mongoose');
 
-DB_URL ='mongodb://JSSaini07:compilerideJSSaini07@ds013584.mlab.com:13584/compileride';//process.env.DB_URL
+DB_URL =process.env.DB_URL
 
 mongoose.connect(DB_URL);
 
